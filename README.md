@@ -1,6 +1,8 @@
 # Marlin-DiscoEasy200
 Firmware for Dagoma DiscoEasy 200 based on https://www.lesimprimantes3d.fr/forum/topic/10887-sticky-derni%C3%A8re-version-marlin-pour-discoeasy-200 and used with the head created by Z122.
 
+This my personal setup but could be useful for others.
+
 * No heatbed
 * No Rod T8 Trapezoidal
 * Z122 head: https://www.thingiverse.com/thing:2478810
