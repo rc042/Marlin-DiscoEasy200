@@ -5,6 +5,8 @@ Firmware for Dagoma DiscoEasy 200 based on https://www.lesimprimantes3d.fr/forum
 * No Rod T8 Trapezoidal
 * Z122 head: https://www.thingiverse.com/thing:2478810
 * Changes made with the help of https://www.lesimprimantes3d.fr/forum/topic/12542-discoeasy-et-concepts-z122-la-solution-parfaite/
+* Screen display with estimated time
+  * I copied the file _duration_t.h_ and _status_screen_DOGM.h_ from https://www.lesimprimantes3d.fr/forum/topic/10887-sticky-derni%C3%A8re-version-marlin-pour-discoeasy-200/?do=findComment&comment=240652
 
 # Requirement
 
