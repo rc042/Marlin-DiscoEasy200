@@ -29,6 +29,7 @@
 #ifndef _STATUS_SCREEN_DOGM_H_
 #define _STATUS_SCREEN_DOGM_H_
 
+
 FORCE_INLINE void _draw_centered_temp(const int16_t temp, const uint8_t x, const uint8_t y) {
   const char * const str = itostr3(temp);
   u8g.setPrintPos(x - (str[0] != ' ' ? 0 : str[1] != ' ' ? 1 : 2) * DOG_CHAR_WIDTH / 2, y);
@@ -283,13 +284,13 @@ static void lcd_implementation_status_screen() {
     //
     if (card.isFileOpen() && PAGE_CONTAINS(42 - (TALL_FONT_CORRECTION), 51 - (TALL_FONT_CORRECTION))) {
       // Upper box
-      u8g.drawBox(42, 42 - (TALL_FONT_CORRECTION), 8, 7);     // 42-48 (or 41-47)
+      u8g.drawBox(38, 42 - (TALL_FONT_CORRECTION), 8, 7);     // 42-48 (or 41-47)   42, 42
       // Right edge
-      u8g.drawBox(50, 44 - (TALL_FONT_CORRECTION), 2, 5);     // 44-48 (or 43-47)
+      u8g.drawBox(46, 44 - (TALL_FONT_CORRECTION), 2, 5);     // 44-48 (or 43-47)   50, 44
       // Bottom hollow box
-      u8g.drawFrame(42, 49 - (TALL_FONT_CORRECTION), 10, 4);  // 49-52 (or 48-51)
+      u8g.drawFrame(38, 49 - (TALL_FONT_CORRECTION), 10, 4);  // 49-52 (or 48-51)   42, 49
       // Corner pixel
-      u8g.drawPixel(50, 43 - (TALL_FONT_CORRECTION));         // 43 (or 42)
+      u8g.drawPixel(46, 43 - (TALL_FONT_CORRECTION));         // 43 (or 42)         50, 43
     }
   #endif // SDSUPPORT
 
@@ -329,7 +330,7 @@ static void lcd_implementation_status_screen() {
       #if ENABLED(DOGM_SD_PERCENT)
         if (PAGE_CONTAINS(41, 48)) {
           // Percent complete
-          u8g.setPrintPos(55, 48);
+          u8g.setPrintPos(51, 48); //55, 48
           u8g.print(itostr3(progress_bar_percent));
           u8g.print('%');
         }
@@ -351,7 +352,8 @@ static void lcd_implementation_status_screen() {
       duration_t elapsed = print_job_timer.duration();
       bool has_days = (elapsed.value >= 60*60*24L);
       uint8_t len = elapsed.toDigital(buffer, has_days);
-      u8g.setPrintPos(SD_DURATION_X, 48);
+      //u8g.setPrintPos(SD_DURATION_X, 48);
+      u8g.setPrintPos(90, 48);
       lcd_print(buffer);
     }
 
@@ -431,7 +433,66 @@ static void lcd_implementation_status_screen() {
     }
   }
 
-  //
+//////////////////////////////////////////////////////affichage du numero de couche//////////////////////////////////////////////////// 
+
+   //if (card.isFileOpen()){ //si on est en train d'imprimer depuis la SD 
+    if (z_en_cours > current_position[Z_AXIS]) // test si extrudeur est redescendu
+      {
+          nb_couche = 1; // impression première couche
+          z_en_cours = current_position[Z_AXIS];
+      }
+      
+      // test du changement de niveau de la couche
+      if (z_en_cours != current_position[Z_AXIS])
+      {
+          nb_couche++;// incrementation du nombre de couche
+          z_en_cours = current_position[Z_AXIS];
+      } 
+      //u8g.drawBox(37,2,5,1); 
+      //u8g.drawBox(36,3,7,4);
+      //u8g.drawBox(37,7,5,1);
+      //u8g.drawBox(38,8,3,1);
+      //u8g.drawBox(39,9,1,1);
+      //u8g.drawBox(32,10,7,1);
+      //u8g.drawBox(32,12,15,1);
+      //u8g.drawBox(32,14,15,1);
+      //u8g.drawBox(32,16,15,1);
+  
+      if (nb_couche < 10)
+        u8g.setPrintPos(37, 28);
+      if (nb_couche >= 10 && nb_couche < 100)
+        u8g.setPrintPos(33, 28);
+      if (nb_couche >= 100 && nb_couche < 1000)
+        u8g.setPrintPos(31, 28);
+      if (nb_couche >= 1000 && nb_couche < 10000)
+        u8g.setPrintPos(28, 28);
+         
+      char buf[5];
+      itoa(nb_couche, buf, 10);
+      lcd_print(buf);
+  
+    //////////////////////////////////////////////////////affichage temps restant//////////////////////////////////////////////////////////////
+
+       if (card.isFileOpen()){ //si on est en train d'imprimer depuis la SD
+        
+     
+      u8g.drawCircle(64, 19, 7); //cercle
+      u8g.drawBox(64,14,1,5); //grande aiguille
+      u8g.drawBox(65,19,3,1); //petite aiguille
+       
+      //if (card.percentDone() != 0 && print_job_timer.duration() != 0) { //si impression a dÃ©butÃ© (Ã©vite divison par 0)
+        if (card.percentDone() >= 1 && print_job_timer.duration() >= 1) { //affiche le temps à partir de 1%) 
+        char rbuffer[10];
+       duration_t remaining = ( ( 100-card.percentDone() )*( print_job_timer.duration()-130) )/card.percentDone(); //(130 = temps approx du bed leveling)   
+        bool rhas_days = (remaining.value > 60*60*24L);
+        uint8_t rlen = remaining.toDigital(rbuffer, rhas_days);
+       u8g.setPrintPos(49, 7);
+        lcd_print(rbuffer);
+      }
+   }
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+  
   // Feedrate
   //
 

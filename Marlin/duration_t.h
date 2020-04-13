@@ -151,17 +151,27 @@ struct duration_t {
   uint8_t toDigital(char *buffer, bool with_days=false) const {
     uint16_t h = uint16_t(this->hour()),
              m = uint16_t(this->minute() % 60UL);
+             //s = uint16_t(this->second() % 60UL);
     if (with_days) {
       uint16_t d = this->day();
-      sprintf_P(buffer, PSTR("%ud %02u:%02u"), d, h % 24, m);
-      return d >= 10 ? 9 : 8;
+      //sprintf_P(buffer, PSTR("%ud %02u:%02u"), d, h % 24, m);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h % 24, m % 60, s);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h, m % 60, s);
+      sprintf_P(buffer, PSTR("%02u:%02u"), h, m);
+      return d >= 10 ? 8 : 7;
     }
-    else if (h < 100) {
+    else if (h < 900) {
+      //sprintf_P(buffer, PSTR("%02u:%02u"), h, m);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h % 24, m % 60, s);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h, m % 60, s);
       sprintf_P(buffer, PSTR("%02u:%02u"), h, m);
       return 5;
     }
     else {
-      sprintf_P(buffer, PSTR("%u:%02u"), h, m);
+      //sprintf_P(buffer, PSTR("%u:%02u"), h, m);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h % 24, m % 60, s);
+      //sprintf_P(buffer, PSTR("%02u:%02u:%02u"), h, m % 60, s);
+      sprintf_P(buffer, PSTR("%02u:%02u"), h, m);
       return 6;
     }
   }
