@@ -22,4 +22,4 @@ https://www.iot-experiments.com/dagoma-discoeasy200/ (Marlin v1.1.8 + original c
 
 Improvement for the move and probe on the plate need to be done since the head is different from the original one.
 
-This point is directely adresses in the slicer (Simplify3D with the modification of the _Origin offset_, x=9, y=16)
+This point is directely adressed in the slicer (Simplify3D with the modification of the _Origin offset_, x=9, y=16)
