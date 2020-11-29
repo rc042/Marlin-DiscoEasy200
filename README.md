@@ -20,6 +20,10 @@ https://www.iot-experiments.com/dagoma-discoeasy200/ (Marlin v1.1.8 + original c
 
 # Issue
 
+Update November 2020: I changed some values in order to center the noze. It's not perfect but there is no need to do some modification on the slicer.
+
+## Outdated
+
 Improvement for the move and probe on the plate need to be done since the head is different from the original one.
 
 This point is directely adressed in the slicer (Simplify3D with the modification of the _Origin offset_, x=9, y=16)

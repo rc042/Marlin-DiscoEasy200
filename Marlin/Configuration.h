@@ -891,8 +891,9 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 190
-#define Y_BED_SIZE 185
+// Edit: November 2020
+#define X_BED_SIZE 210
+#define Y_BED_SIZE 210
 
 // Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1036,13 +1037,19 @@
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   // Set the boundaries for probing (where the probe can reach).
-  #define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  // #define LEFT_PROBE_BED_POSITION MIN_PROBE_EDGE
+  #define LEFT_PROBE_BED_POSITION (X_PROBE_OFFSET_FROM_EXTRUDER + MIN_PROBE_EDGE)
+  // #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
   #define RIGHT_PROBE_BED_POSITION (X_BED_SIZE - MIN_PROBE_EDGE)
   #define FRONT_PROBE_BED_POSITION MIN_PROBE_EDGE
   // #define BACK_PROBE_BED_POSITION (Y_BED_SIZE - MIN_PROBE_EDGE - Y_PROBE_OFFSET_FROM_EXTRUDER)
-  #define BACK_PROBE_BED_POSITION 128
+  // #define BACK_PROBE_BED_POSITION 128
+  #define BACK_PROBE_BED_POSITION 153
 
   // Probe along the Y axis, advancing X after each column
+
+
+  
   //#define PROBE_Y_FIRST
 
   #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
@@ -1143,8 +1150,9 @@
 
 // Manually set the home position. Leave these undefined for automatic settings.
 // For DELTA this is the top-center of the Cartesian print volume.
-//#define MANUAL_X_HOME_POS 0
-//#define MANUAL_Y_HOME_POS 0
+// Edit November 2020
+#define MANUAL_X_HOME_POS 16
+#define MANUAL_Y_HOME_POS 38
 //#define MANUAL_Z_HOME_POS 0
 
 // Use "Z Safe Homing" to avoid homing with a Z probe outside the bed area.
